@@ -1,4 +1,4 @@
-FROM mesosphere/marathon-lb
+FROM vixns/marathon-lb:long-loglines
 MAINTAINER Stéphane Cottin <stephane.cottin@vixns.com>
 ENV KAFKA_TOPIC=haproxy_logs PORTS=9090
 RUN apt-get update \
