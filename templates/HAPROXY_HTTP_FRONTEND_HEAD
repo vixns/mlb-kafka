@@ -1,0 +1,7 @@
+frontend marathon_http_in
+  bind *:80
+  mode http  
+  capture request header Host len 100
+  capture request header User-agent len 200
+  capture request header Referer len 1024
+  

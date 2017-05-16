@@ -1,0 +1,215 @@
+{
+    "mappings": {
+        "_default_": {
+            "_all": {
+                "enabled": true,
+                "omit_norms": true
+            },
+            "dynamic_templates": [
+                {
+                    "message_field": {
+                        "mapping": {
+                            "fielddata": {
+                                "format": "disabled"
+                            },
+                            "index": "analyzed",
+                            "omit_norms": true,
+                            "type": "string"
+                        },
+                        "match_mapping_type": "string",
+                        "path_match": "message"
+                    }
+                },
+                {
+                    "string_fields": {
+                        "mapping": {
+                            "fielddata": {
+                                "format": "disabled"
+                            },
+                            "fields": {
+                                "raw": {
+                                    "doc_values": true,
+                                    "ignore_above": 256,
+                                    "index": "not_analyzed",
+                                    "type": "string"
+                                }
+                            },
+                            "index": "analyzed",
+                            "omit_norms": true,
+                            "type": "string"
+                        },
+                        "match": "*",
+                        "match_mapping_type": "string"
+                    }
+                },
+                {
+                    "float_fields": {
+                        "mapping": {
+                            "doc_values": true,
+                            "type": "float"
+                        },
+                        "match": "*",
+                        "match_mapping_type": "float"
+                    }
+                },
+                {
+                    "double_fields": {
+                        "mapping": {
+                            "doc_values": true,
+                            "type": "double"
+                        },
+                        "match": "*",
+                        "match_mapping_type": "double"
+                    }
+                },
+                {
+                    "byte_fields": {
+                        "mapping": {
+                            "doc_values": true,
+                            "type": "byte"
+                        },
+                        "match": "*",
+                        "match_mapping_type": "byte"
+                    }
+                },
+                {
+                    "short_fields": {
+                        "mapping": {
+                            "doc_values": true,
+                            "type": "short"
+                        },
+                        "match": "*",
+                        "match_mapping_type": "short"
+                    }
+                },
+                {
+                    "integer_fields": {
+                        "mapping": {
+                            "doc_values": true,
+                            "type": "integer"
+                        },
+                        "match": "*",
+                        "match_mapping_type": "integer"
+                    }
+                },
+                {
+                    "long_fields": {
+                        "mapping": {
+                            "doc_values": true,
+                            "type": "long"
+                        },
+                        "match": "*",
+                        "match_mapping_type": "long"
+                    }
+                },
+                {
+                    "date_fields": {
+                        "mapping": {
+                            "doc_values": true,
+                            "type": "date"
+                        },
+                        "match": "*",
+                        "match_mapping_type": "date"
+                    }
+                },
+                {
+                    "geo_point_fields": {
+                        "mapping": {
+                            "doc_values": true,
+                            "geohash": true,
+                            "lat_lon": true,
+                            "type": "geo_point"
+                        },
+                        "match": "*",
+                        "match_mapping_type": "geo_point"
+                    }
+                }
+            ],
+            "properties": {
+                "@timestamp": {
+                    "doc_values": true,
+                    "type": "date"
+                },
+                "@version": {
+                    "doc_values": true,
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+		"c_ip": {
+                    "doc_values": true,
+	            "type": "ip"
+		},
+		"tc": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"tq": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"tr": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"tt": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"tw": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"srv_queue": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"srv_conn": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"retries": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"c_port": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"bytes": {
+	            "type": "integer",
+		    "ignore_malformed": true
+		},
+		"beconn": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"feconn": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"actconn": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"backend_queue": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+		"status_code": {
+	            "type": "short",
+		    "ignore_malformed": true
+		},
+                "geoip": {
+                    "dynamic": true,
+                    "properties": {
+                        "coordinates": {
+                            "type": "geo_point"
+                        }
+                    },
+                    "type": "object"
+                }
+            }
+        }
+    },
+    "template": "haproxy-*"
+}
