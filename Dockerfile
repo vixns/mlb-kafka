@@ -1,4 +1,4 @@
-FROM vixns/marathon-lb:hap181
+FROM vixns/marathon-lb:hap183
 ENV KAFKA_TOPIC=haproxy_logs PORTS=9090
 RUN apt-get update \
   && apt-get install -y --no-install-recommends curl rsyslog-kafka \
