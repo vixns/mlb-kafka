@@ -1,31 +1,36 @@
 #!/bin/sh
 exec 2>&1
 
+KAFKA_CONF="\"socket.timeout.ms=1000\",\"socket.keepalive.enable=true\""
+if [ -n "${KAFKA_USERNAME}" ]
+then
+KAFKA_CONF="${KAFKA_CONF},\"security.protocol=sasl_ssl\",\"ssl.ca.location=${KAFKA_CA_FILE}\",\"sasl.mechanism=PLAIN\""
+KAFKA_CONF="${KAFKA_CONF},\"sasl.username=${KAFKA_USERNAME}\",\"sasl.password=${KAFKA_PASSWORD}\""
+fi
 cat > rsyslog.conf <<EOF
 global(maxMessageSize="64k")
 module(load="imuxsock")
 module(load="omkafka")
 
-local0.*    action(type="omkafka"
-	   template="RSYSLOG_TraditionalFileFormat"
-	   topic="${KAFKA_TOPIC}"
-	   broker="${KAFKA_BROKERS}"
-	   partitions.auto="on"
-	   errorFile="/rsyslog.err"
-	   queue.filename="omkafkaq"
-	   queue.spoolDirectory="/var/lib/rsyslog"
-       queue.size="300000"
-       queue.maxdiskspace="536870912"
-       queue.lowwatermark="20000"
-       queue.highwatermark="200000"
-       queue.discardmark="250000"
-       queue.type="LinkedList"
-       queue.discardseverity="4"
-       queue.saveonshutdown="on" queue.dequeuebatchsize="4"
-       confParam=[ 
-                  "socket.timeout.ms=1000",
-                  "socket.keepalive.enable=true"]
-      )
+local0.* action (
+      type="omkafka"
+	template="RSYSLOG_TraditionalFileFormat"
+	topic="${KAFKA_TOPIC}"
+	broker="${KAFKA_BROKERS}"
+	partitions.auto="on"
+	errorFile="/rsyslog.err"
+	queue.filename="omkafkaq"
+	queue.spoolDirectory="/var/lib/rsyslog"
+      queue.size="300000"
+      queue.maxdiskspace="536870912"
+      queue.lowwatermark="20000"
+      queue.highwatermark="200000"
+      queue.discardmark="250000"
+      queue.type="LinkedList"
+      queue.discardseverity="4"
+      queue.saveonshutdown="on" queue.dequeuebatchsize="4"
+      confParam=[${KAFKA_CONF}]
+)
 
 EOF
-exec rsyslogd -n -f rsyslog.conf 
+exec rsyslogd -n -f rsyslog.conf
