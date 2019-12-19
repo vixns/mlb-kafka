@@ -23,7 +23,7 @@ local0.* action (
 	queue.spoolDirectory="/var/lib/rsyslog"
       queue.size="300000"
       queue.maxdiskspace="536870912"
-      queue.lowwatermark="20000"
+      queue.lowwatermark="2000"
       queue.highwatermark="200000"
       queue.discardmark="250000"
       queue.type="LinkedList"
